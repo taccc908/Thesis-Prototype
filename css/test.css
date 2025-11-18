@@ -1,0 +1,10 @@
+body {
+	font-family: "Bebas Neue", sans-serif;
+	color: white;
+	background-color: black;
+	font-size: 160%;
+	text-align: center;}
+video {
+	height: 50%;
+	width: 50%;}
+/*use absolute positioning and z-index*/
