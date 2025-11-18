@@ -2,9 +2,9 @@ const modal = document.getElementById('videoModal');
 const videoContainer = document.querySelector('.video-modal-content');
 const video = document.getElementById('popupVideo');
 
-// Play video and position it where the user clicked
-document.addEventListener('click', (event) => {
-
+// Play video and position it where the user tapped
+document.addEventListener('pointerdown', (event) => {
+  
   // Only trigger if modal is not already open
   if (modal.style.display !== 'block') {
     const clickX = event.clientX;
@@ -12,28 +12,28 @@ document.addEventListener('click', (event) => {
 
     modal.style.display = 'block';
 
-    // Position the video container at click location
+    // Position the modal container at the tap point
     videoContainer.style.position = 'absolute';
     videoContainer.style.left = `${clickX}px`;
     videoContainer.style.top = `${clickY}px`;
 
+    // iPad/iPhone autoplay rules
+    video.muted = false;            // allow sound
+    video.playsInline = true;       // required for iOS popup video
     video.currentTime = 0;
-    video.play();
+    video.play().catch(() => {
+      // If iOS blocks autoplay, tap again will play
+      console.log("iOS prevented autoplay, waiting for user gesture.");
+    });
   }
 });
 
-// Close modal when video ends
+// Close ONLY when video ends
 video.addEventListener('ended', () => {
   closeModal();
 });
 
-// Close modal if clicking outside the video
-window.addEventListener('click', (event) => {
-  if (event.target === modal) {
-    closeModal();
-  }
-});
-
+// Explicit close function
 function closeModal() {
   video.pause();
   video.currentTime = 0;
