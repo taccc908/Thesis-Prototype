@@ -8,14 +8,12 @@ body {
 .video-modal {
   display: none;
   position: fixed;
-  z-index: 1000;
+  z-index: 999;
   inset: 0;
   background-color: rgba(0,0,0,0.8);
 }
 
 .video-modal-content {
-  position: relative;
-  margin: 5% auto;
-  width: fit-content;
-  max-width: 90%;
+  position: absolute; /* required for click placement */
+  transform: translate(-50%, -50%); /* centers the top-left at the click point */
 }
