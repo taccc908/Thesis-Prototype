@@ -1,11 +1,22 @@
 const modal = document.getElementById('videoModal');
+const videoContainer = document.querySelector('.video-modal-content');
 const video = document.getElementById('popupVideo');
 
-// Play video when clicking ANYWHERE on the page
-document.addEventListener('click', () => {
+// Play video and position it where the user clicked
+document.addEventListener('click', (event) => {
+
   // Only trigger if modal is not already open
   if (modal.style.display !== 'block') {
+    const clickX = event.clientX;
+    const clickY = event.clientY;
+
     modal.style.display = 'block';
+
+    // Position the video container at click location
+    videoContainer.style.position = 'absolute';
+    videoContainer.style.left = `${clickX}px`;
+    videoContainer.style.top = `${clickY}px`;
+
     video.currentTime = 0;
     video.play();
   }
