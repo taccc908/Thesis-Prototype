@@ -9,13 +9,14 @@
 	</head>
 	<body>
 		<h1>Tap the screen to read into my brain</h1>
-		<video src="Video/NeuronPrototype.mp4"
-			poster="Pictures/black.jpeg"
-			width="1280" height="720"
-			controls
-			preload="auto"
-			loop>
-		</video>
-		<!img src="Pictures/neuron.gif" title="I love you"/>
+		<button id="openVideoBtn">Play Neuron Prototype</button>
+		<div id="videoModal" class="video-modal">
+ 		 <div class="video-modal-content">
+   			 <span id="closeModalBtn" class="video-modal-close">&times;</span>
+    			<video id="popupVideo" width="640" controls>
+      				<source src="NeuronPrototype.mp4" type="video/mp4">
+  		  </video>
+		  </div>
+		</div>
 	</body>
 </html>
