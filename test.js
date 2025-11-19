@@ -2,36 +2,32 @@ const modal = document.getElementById('videoModal');
 const videoContainer = document.querySelector('.video-modal-content');
 const video = document.getElementById('popupVideo');
 
-document.addEventListener('pointerdown', (event) => {
-    // Only if modal is closed
+document.addEventListener('click', (event) => {
     if (modal.style.display !== 'block') {
-
-        // Show modal first — must be visible BEFORE play()
-        modal.style.display = 'block';
-
-        // Position video container at tap
+        // Position video at click
         const clickX = event.clientX;
         const clickY = event.clientY;
         videoContainer.style.left = `${clickX}px`;
         videoContainer.style.top = `${clickY}px`;
         videoContainer.style.transform = 'translate(-50%, -50%)';
 
-        // iOS rules: playsInline and muted=false
-        video.playsInline = true;
-        video.muted = false;
-        video.currentTime = 0;
+        // Show modal
+        modal.style.display = 'block';
 
-        // IMPORTANT: Play video DIRECTLY inside pointerdown event
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(err => {
-                console.log("iPad/iPhone blocked playback, user must tap again.", err);
-            });
-        }
+        // Reset video
+        video.currentTime = 0;
+        video.muted = true; // avoids iOS block
+        video.playsInline = true;
+
+        // Play video
+        video.play().then(() => {
+            video.muted = false; // unmute after playback starts
+        }).catch(err => {
+            console.log("Playback blocked:", err);
+        });
     }
 });
 
-// Close modal when video ends
 video.addEventListener('ended', () => {
     video.pause();
     video.currentTime = 0;
