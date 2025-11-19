@@ -13,12 +13,13 @@ document.addEventListener('pointerdown', (event) => {
 
     modal.style.display = 'block';
 
-    caption.style.display = 'block';
-
     // Position the modal container at the tap point
-    videoContainer.style.position = 'absolute';
     videoContainer.style.left = `${clickX}px`;
     videoContainer.style.top = `${clickY}px`;
+    videoContainer.style.transform = "translate(-50%, -50%)";
+
+    caption.style.display = "block";
+    requestAnimationFrame(() => caption.style.opacity = 1);
 
     // iPad/iPhone autoplay rules
     video.muted = false;            // allow sound
@@ -26,7 +27,7 @@ document.addEventListener('pointerdown', (event) => {
     video.currentTime = 0;
     video.play().catch(() => {
       // If iOS blocks autoplay, tap again will play
-      console.log("iOS prevented autoplay, waiting for user gesture.");
+      console.log("Autoplay blocked, user must tap again.", err);
     });
   }
 });
@@ -41,5 +42,8 @@ function closeModal() {
   video.pause();
   video.currentTime = 0;
   modal.style.display = 'none';
-  caption.style.display = 'none';
+  caption.style.opacity = 0;
+  setTimeout(() => {
+    caption.style.display = "none";
+  }, 400);
 }
