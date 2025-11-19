@@ -17,15 +17,16 @@ body {
   position: absolute; /* required for click placement */
   transform: translate(-50%, -50%); /* centers the top-left at the click point */
 }
-/* Ensure the title text is always on top */
+/* Make the h1 title always appear on top */
 h1 {
-  position: relative;  /* keeps the text in its current spot */
-  z-index: 10;         /* higher than the video */
-  color: white;        /* optional: ensures text is visible */
+  position: relative !important;  /* keep it in its current spot */
+  z-index: 9999 !important;       /* very high to stay above the video */
+  color: white;                    /* ensures text is visible */
 }
 
-/* Make the video ignore pointer events so it doesn't cover the text */
+/* Ensure the video is behind the text and doesn't block interactions */
 video {
-  pointer-events: none; /* clicks/taps go through to text */
-  z-index: 1;           /* lower than text */
+  position: absolute !important;   /* maintain dynamic positioning from scripts */
+  z-index: 1 !important;           /* behind the h1 text */
+  pointer-events: none !important; /* let clicks pass through */
 }
