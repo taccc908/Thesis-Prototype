@@ -3,47 +3,51 @@ const videoContainer = document.querySelector('.video-modal-content');
 const video = document.getElementById('popupVideo');
 const caption = document.getElementById("video-caption");
 
-// Play video and position it where the user tapped
+// Play video at tap location
 document.addEventListener('pointerdown', (event) => {
-  
-  // Only trigger if modal is not already open
-  if (modal.style.display !== 'block') {
-    const clickX = event.clientX;
-    const clickY = event.clientY;
+    // Only open if modal is closed
+    if (modal.style.display !== 'block') {
+        const clickX = event.clientX;
+        const clickY = event.clientY;
 
-    modal.style.display = 'block';
+        // Show modal and position video container
+        modal.style.display = 'block';
+        videoContainer.style.left = `${clickX}px`;
+        videoContainer.style.top = `${clickY}px`;
+        videoContainer.style.transform = 'translate(-50%, -50%)';
 
-    // Position the modal container at the tap point
-    videoContainer.style.left = `${clickX}px`;
-    videoContainer.style.top = `${clickY}px`;
-    videoContainer.style.transform = "translate(-50%, -50%)";
+        // Show caption
+        caption.style.display = 'block';
+        requestAnimationFrame(() => {
+            caption.style.opacity = 1; // fade in
+        });
 
-    caption.style.display = "block";
-    requestAnimationFrame(() => caption.style.opacity = 1);
+        // iOS/iPad rules: must play in direct user gesture
+        video.muted = false;
+        video.playsInline = true;
+        video.currentTime = 0;
 
-    // iPad/iPhone autoplay rules
-    video.muted = false;            // allow sound
-    video.playsInline = true;       // required for iOS popup video
-    video.currentTime = 0;
-    video.play().catch(() => {
-      // If iOS blocks autoplay, tap again will play
-      console.log("Autoplay blocked, user must tap again.", err);
-    });
-  }
+        // Play video directly
+        video.play().catch(err => {
+            console.log("Autoplay blocked, tap again.", err);
+        });
+    }
 });
 
-// Close ONLY when video ends
+// Close modal when video ends
 video.addEventListener('ended', () => {
-  closeModal();
+    closeModal();
 });
 
-// Explicit close function
+// Close modal function
 function closeModal() {
-  video.pause();
-  video.currentTime = 0;
-  modal.style.display = 'none';
-  caption.style.opacity = 0;
-  setTimeout(() => {
-    caption.style.display = "none";
-  }, 400);
+    video.pause();
+    video.currentTime = 0;
+    modal.style.display = 'none';
+
+    // Hide caption with fade-out
+    caption.style.opacity = 0;
+    setTimeout(() => {
+        caption.style.display = 'none';
+    }, 400); // matches transition
 }
