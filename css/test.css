@@ -18,7 +18,7 @@ body {
   transform: translate(-50%, -50%); /* centers the top-left at the click point */
 }
 /* Ensure the title text is always on top */
-p {
+h1 {
   position: relative;  /* keeps the text in its current spot */
   z-index: 10;         /* higher than the video */
   color: white;        /* optional: ensures text is visible */
