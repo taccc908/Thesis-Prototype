@@ -1,6 +1,7 @@
 const modal = document.getElementById('videoModal');
 const videoContainer = document.querySelector('.video-modal-content');
 const video = document.getElementById('popupVideo');
+const caption = document.getElementById("video-caption");
 
 // Play video and position it where the user tapped
 document.addEventListener('pointerdown', (event) => {
@@ -11,6 +12,8 @@ document.addEventListener('pointerdown', (event) => {
     const clickY = event.clientY;
 
     modal.style.display = 'block';
+
+    caption.style.display = 'block';
 
     // Position the modal container at the tap point
     videoContainer.style.position = 'absolute';
@@ -38,4 +41,5 @@ function closeModal() {
   video.pause();
   video.currentTime = 0;
   modal.style.display = 'none';
+  caption.style.display = 'none';
 }
