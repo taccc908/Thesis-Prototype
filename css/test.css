@@ -17,3 +17,15 @@ body {
   position: absolute; /* required for click placement */
   transform: translate(-50%, -50%); /* centers the top-left at the click point */
 }
+/* Ensure the title text is always on top */
+p {
+  position: relative;  /* keeps the text in its current spot */
+  z-index: 10;         /* higher than the video */
+  color: white;        /* optional: ensures text is visible */
+}
+
+/* Make the video ignore pointer events so it doesn't cover the text */
+video {
+  pointer-events: none; /* clicks/taps go through to text */
+  z-index: 1;           /* lower than text */
+}
