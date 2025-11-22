@@ -19,7 +19,7 @@ body {
 }
 
 #popupVideo {
-    width: 200px;   /* or any size you want */
+    width: 400px;   /* or any size you want */
     height: auto;
     max-width: 90vw;
     max-height: 90vh;
