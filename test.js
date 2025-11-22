@@ -1,78 +1,51 @@
 const modal = document.getElementById('videoModal');
-const videoContainer = document.querySelector('.video-modal-content');
 
-const preloadA = document.createElement('video');
-preloadA.src = "Video/Neuron3.gif";
-preloadA.preload = "auto";
-preloadA.load();
+// GIF sources to alternate
+let useFirstGif = true;
+const gifA = "Video/Neuron3.gif";
+const gifB = "Video/Neuron9.gif";
 
-const preloadB = document.createElement('video');
-preloadB.src = "Video/Neuron9.mov";
-preloadB.preload = "auto";
-preloadB.load();
+// Duration to display each GIF (ms)
+const GIF_DURATION = 2000; // adjust based on your GIF length
 
-// Alternate between videos
-let useFirstVideo = true;
-const videoA = "Video/Neuron3.gif";
-const videoB = "Video/Neuron9.mov";
-
-// Tap on both desktop + iOS
-document.addEventListener('touchstart', handleTap, { passive: false });
+// Listen for taps on desktop and iPad/iPhone
 document.addEventListener('click', handleTap);
-
-let lastTapTime = 0;
+document.addEventListener('touchstart', handleTap, { passive: false });
 
 function handleTap(event) {
-    const now = Date.now();
-    // Ignore second event (iOS click after touchstart)
-    if (now - lastTapTime < 300) {
-        return;
-    }
-    lastTapTime = now;
+    // Prevent iOS double-firing
+    if (event.type === 'touchstart') event.preventDefault();
 
-    // Prevent double touch on iOS
-    if (event.type === "touchstart") {
-        event.preventDefault();
-    }
+    const x = (event.clientX !== undefined) ? event.clientX :
+              (event.touches && event.touches[0] && event.touches[0].clientX) || window.innerWidth/2;
+    const y = (event.clientY !== undefined) ? event.clientY :
+              (event.touches && event.touches[0] && event.touches[0].clientY) || window.innerHeight/2;
 
-    const x = event.clientX || event.touches?.[0].clientX;
-    const y = event.clientY || event.touches?.[0].clientY;
+    // Pick GIF source and alternate
+    const src = useFirstGif ? gifA : gifB;
+    useFirstGif = !useFirstGif;
 
-    // Always choose and flip video source
-    const src = useFirstVideo ? videoA : videoB;
-    useFirstVideo = !useFirstVideo;
+    // Create new IMG element for the GIF
+    const newGif = document.createElement('img');
+    newGif.src = src;
+    newGif.style.position = 'absolute';
+    newGif.style.left = `${x}px`;
+    newGif.style.top = `${y}px`;
+    newGif.style.transform = 'translate(-50%, -50%)';
+    newGif.style.pointerEvents = 'none'; // so taps pass through
+    newGif.style.maxWidth = '80vw';
+    newGif.style.height = 'auto';
 
-    // Create a NEW video element each tap
-    const newVideo = document.createElement('video');
-    newVideo.src = src;
-    newVideo.width = 640;
-    newVideo.playsInline = true;
-    newVideo.muted = true; // iOS requirement for autoplay
-    newVideo.style.position = "absolute";
-    newVideo.style.left = `${x}px`;
-    newVideo.style.top = `${y}px`;
-    newVideo.style.transform = "translate(-50%, -50%)";
+    // Add GIF to modal
+    modal.appendChild(newGif);
+    modal.style.display = 'block';
 
-    // Add it to the modal
-    modal.appendChild(newVideo);
-    modal.style.display = "block";
-
-    // Force iOS to load before play
-    newVideo.load();
-
-    newVideo.play().then(() => {
-        newVideo.muted = false;
-    }).catch(err => {
-        console.log("Playback blocked:", err);
-    });
-
-    // After video ends, remove only THIS video
-    newVideo.addEventListener('ended', () => {
-        newVideo.remove();
-
-        // If no videos left, hide the modal
-        if (modal.querySelectorAll("video").length === 0) {
-            modal.style.display = "none";
+    // Remove GIF after duration
+    setTimeout(() => {
+        newGif.remove();
+        // Hide modal if no GIFs left
+        if (modal.querySelectorAll('img').length === 0) {
+            modal.style.display = 'none';
         }
-    });
+    }, GIF_DURATION);
 }
