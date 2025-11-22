@@ -1,6 +1,16 @@
 const modal = document.getElementById('videoModal');
 const videoContainer = document.querySelector('.video-modal-content');
 
+const preloadA = document.createElement('video');
+preloadA.src = "Video/Neuron3.mov";
+preloadA.preload = "auto";
+preloadA.load();
+
+const preloadB = document.createElement('video');
+preloadB.src = "Video/Neuron9.mov";
+preloadB.preload = "auto";
+preloadB.load();
+
 // Alternate between videos
 let useFirstVideo = true;
 const videoA = "Video/Neuron3.mov";
