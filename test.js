@@ -2,7 +2,7 @@ const modal = document.getElementById('videoModal');
 const videoContainer = document.querySelector('.video-modal-content');
 
 const preloadA = document.createElement('video');
-preloadA.src = "Video/Neuron3.mov";
+preloadA.src = "Video/Neuron3.gif";
 preloadA.preload = "auto";
 preloadA.load();
 
@@ -13,7 +13,7 @@ preloadB.load();
 
 // Alternate between videos
 let useFirstVideo = true;
-const videoA = "Video/Neuron3.mov";
+const videoA = "Video/Neuron3.gif";
 const videoB = "Video/Neuron9.mov";
 
 // Tap on both desktop + iOS
