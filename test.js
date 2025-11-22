@@ -7,10 +7,19 @@ const videoA = "Video/Neuron3.mov";
 const videoB = "Video/Neuron9.mov";
 
 // Tap on both desktop + iOS
+document.addEventListener('touchstart', handleTap, { passive: false });
 document.addEventListener('click', handleTap);
-document.addEventListener('touchstart', handleTap);
+
+let lastTapTime = 0;
 
 function handleTap(event) {
+    const now = Date.now();
+    // Ignore second event (iOS click after touchstart)
+    if (now - lastTapTime < 300) {
+        return;
+    }
+    lastTapTime = now;
+
     // Prevent double touch on iOS
     if (event.type === "touchstart") {
         event.preventDefault();
