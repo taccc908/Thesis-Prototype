@@ -1,3 +1,7 @@
+function freshGif(src) {
+    return src + "?t=" + Date.now();
+}
+
 const modal = document.getElementById('videoModal');
 
 // GIF sources to alternate
@@ -5,8 +9,11 @@ let useFirstGif = true;
 const gifA = "Video/Neuron3.gif";
 const gifB = "Video/Neuron9.gif";
 
-// Duration to display each GIF (ms)
-const GIF_DURATION = 2000; // adjust based on your GIF length
+// Duration for each GIF in milliseconds
+const gifDurations = {
+  [gifA]: 2000, // Neuron3.gif
+  [gifB]: 1440  // Neuron9.gif
+};
 
 // Listen for taps on desktop and iPad/iPhone
 document.addEventListener('click', handleTap);
@@ -27,7 +34,7 @@ function handleTap(event) {
 
     // Create new IMG element for the GIF
     const newGif = document.createElement('img');
-    newGif.src = src;
+    newGif.src = `${src}?t=${Date.now()}`;
     newGif.style.position = 'absolute';
     newGif.style.left = `${x}px`;
     newGif.style.top = `${y}px`;
@@ -40,12 +47,13 @@ function handleTap(event) {
     modal.appendChild(newGif);
     modal.style.display = 'block';
 
-    // Remove GIF after duration
+    // Remove GIF after its specific duration
+    const duration = gifDurations[src] || 2000; // fallback to 2s
     setTimeout(() => {
         newGif.remove();
         // Hide modal if no GIFs left
         if (modal.querySelectorAll('img').length === 0) {
             modal.style.display = 'none';
         }
-    }, GIF_DURATION);
+    }, duration);
 }
