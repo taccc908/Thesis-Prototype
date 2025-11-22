@@ -17,9 +17,3 @@ body {
   position: absolute; /* required for click placement */
   transform: translate(-50%, -50%); /* centers the top-left at the click point */
 }
-
-#popupGif {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
