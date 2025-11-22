@@ -2,8 +2,21 @@ const modal = document.getElementById('videoModal');
 const videoContainer = document.querySelector('.video-modal-content');
 const video = document.getElementById('popupVideo');
 
+// --- NEW: toggle flag ---
+let useFirstVideo = true;  
+const videoA = "Video/Neuron3.mov";
+const videoB = "Video/Neuron9.mov";
+
 document.addEventListener('click', (event) => {
     if (modal.style.display !== 'block') {
+        // Alternate videos
+        if (useFirstVideo) {
+            video.src = videoA;
+        } else {
+            video.src = videoB;
+        }
+        useFirstVideo = !useFirstVideo;   // flip for next tap
+
         // Position video at click
         const clickX = event.clientX;
         const clickY = event.clientY;
