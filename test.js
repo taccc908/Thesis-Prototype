@@ -2,43 +2,55 @@ let tapLocked = false;
 
 const modal = document.getElementById('videoModal');
 
-// GIF sources to alternate
-let useFirstGif = true;
-const gifA = "Video/Neuron3.gif";
-const gifB = "Video/Neuron9.gif";
+// --- GIF LIST (in order) ---
+const gifList = [
+    "Video/Neuron1.gif",
+    "Video/Neuron3.gif",
+    "Video/Neuron9.gif"
+];
 
-// Duration for each GIF in milliseconds
+// --- DURATIONS ---
 const gifDurations = {
-  [gifA]: 2000, // Neuron3.gif
-  [gifB]: 1440  // Neuron9.gif
+    "Video/Neuron1.gif": 4000,
+    "Video/Neuron3.gif": 1440,
+    "Video/Neuron9.gif": 1400
 };
+
+// Index to track which GIF plays next
+let gifIndex = 0;
 
 // Listen for taps on desktop and iPad/iPhone
 document.addEventListener('click', handleTap);
 document.addEventListener('touchstart', handleTap, { passive: false });
 
+// Force GIF to reset to frame 1
 function freshGif(src) {
     return src + "?t=" + Date.now();
 }
 
 function handleTap(event) {
-    // Prevent double handling
+
+    // --- Prevent double triggering (iPad & fast double-tap) ---
     if (tapLocked) return;
     tapLocked = true;
-    setTimeout(() => tapLocked = false, 250); // adjust if needed
+    setTimeout(() => tapLocked = false, 250);
 
     if (event.type === 'touchstart') event.preventDefault();
 
+    // --- Get tap coordinates ---
     const x = (event.clientX !== undefined) ? event.clientX :
-              (event.touches && event.touches[0] && event.touches[0].clientX) || window.innerWidth/2;
+        (event.touches && event.touches[0] && event.touches[0].clientX) || window.innerWidth / 2;
+
     const y = (event.clientY !== undefined) ? event.clientY :
-              (event.touches && event.touches[0] && event.touches[0].clientY) || window.innerHeight/2;
+        (event.touches && event.touches[0] && event.touches[0].clientY) || window.innerHeight / 2;
 
-    const rawSrc = useFirstGif ? gifA : gifB;
-    useFirstGif = !useFirstGif;
+    // --- Pick next GIF in sequence ---
+    const rawSrc = gifList[gifIndex];
+    gifIndex = (gifIndex + 1) % gifList.length;
 
+    // --- Create GIF element ---
     const newGif = document.createElement('img');
-    newGif.src = freshGif(rawSrc);  // ← using your reset fix
+    newGif.src = freshGif(rawSrc);
     newGif.style.position = 'absolute';
     newGif.style.left = `${x}px`;
     newGif.style.top = `${y}px`;
@@ -47,12 +59,16 @@ function handleTap(event) {
     newGif.style.maxWidth = '80vw';
     newGif.style.height = 'auto';
 
+    // --- Add to modal ---
     modal.appendChild(newGif);
     modal.style.display = 'block';
 
+    // --- Remove after its unique duration ---
     const duration = gifDurations[rawSrc] || 2000;
     setTimeout(() => {
         newGif.remove();
+
+        // Hide modal if empty
         if (modal.querySelectorAll('img').length === 0) {
             modal.style.display = 'none';
         }
