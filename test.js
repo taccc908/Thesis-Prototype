@@ -5,15 +5,37 @@ const modal = document.getElementById('videoModal');
 // --- GIF LIST (in order) ---
 const gifList = [
     "Video/Neuron1.gif",
+    "Video/Neuron2.gif",
     "Video/Neuron3.gif",
-    "Video/Neuron9.gif"
+    "Video/Neuron4.gif",
+    "Video/Neuron5.gif",
+    "Video/Neuron6.gif",
+    "Video/Neuron7.gif",
+    "Video/Neuron8.gif",
+    "Video/Neuron9.gif",
+    "Video/Neuron10.gif",
+    "Video/Neuron11.gif",
+    "Video/Neuron12.gif",
+    "Video/Neuron13.gif",
+    "Video/Neuron14.gif"
 ];
 
 // --- DURATIONS ---
 const gifDurations = {
     "Video/Neuron1.gif": 4000,
-    "Video/Neuron3.gif": 1440,
-    "Video/Neuron9.gif": 1400
+    "Video/Neuron2.gif": 3000,
+    "Video/Neuron3.gif": 2000,
+    "Video/Neuron4.gif": 2000,
+    "Video/Neuron5.gif": 2000,
+    "Video/Neuron6.gif": 5000,
+    "Video/Neuron7.gif": 3000,
+    "Video/Neuron8.gif": 2000,
+    "Video/Neuron9.gif": 2000,
+    "Video/Neuron10.gif": 3000,
+    "Video/Neuron11.gif": 3000,
+    "Video/Neuron12.gif": 3000,
+    "Video/Neuron13.gif": 2000,
+    "Video/Neuron14.gif": 3000
 };
 
 // Index to track which GIF plays next
