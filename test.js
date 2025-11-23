@@ -22,20 +22,20 @@ const gifList = [
 
 // --- DURATIONS ---
 const gifDurations = {
-    "Video/Neuron1.gif": 4000,
-    "Video/Neuron2.gif": 3000,
-    "Video/Neuron3.gif": 2000,
-    "Video/Neuron4.gif": 2000,
-    "Video/Neuron5.gif": 2000,
-    "Video/Neuron6.gif": 5000,
-    "Video/Neuron7.gif": 3000,
-    "Video/Neuron8.gif": 2000,
-    "Video/Neuron9.gif": 2000,
-    "Video/Neuron10.gif": 3000,
-    "Video/Neuron11.gif": 3000,
-    "Video/Neuron12.gif": 3000,
-    "Video/Neuron13.gif": 2000,
-    "Video/Neuron14.gif": 3000
+    "Video/Neuron1.gif": 3400,
+    "Video/Neuron2.gif": 2420,
+    "Video/Neuron3.gif": 1440,
+    "Video/Neuron4.gif": 1440,
+    "Video/Neuron5.gif": 1440,
+    "Video/Neuron6.gif": 4380,
+    "Video/Neuron7.gif": 2420,
+    "Video/Neuron8.gif": 1440,
+    "Video/Neuron9.gif": 1440,
+    "Video/Neuron10.gif": 2420,
+    "Video/Neuron11.gif": 2420,
+    "Video/Neuron12.gif": 2420,
+    "Video/Neuron13.gif": 1440,
+    "Video/Neuron14.gif": 2420
 };
 
 // Index to track which GIF plays next
