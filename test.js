@@ -99,3 +99,4 @@ function handleTap(event) {
         }
     }, 600); // match this to your CSS transition time
 }, duration);
+}
